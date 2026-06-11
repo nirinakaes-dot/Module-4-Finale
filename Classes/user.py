@@ -1,9 +1,6 @@
 from datetime import date
 from habit import Habit
 
-
-
-
 class User:
 
     def __init__(self,username,):
@@ -52,6 +49,28 @@ class User:
         #Appends task into the habit empty list
 
         self.habits.append(habit)
+        print('Habit is succesfully added')
+
+
+    def delete_habit(self,index):
+## Check if the index is larger than the length of habit objects
+        if index > len(self.habits) or index<1:
+            raise ValueError('Enter a valid number')
+        self.habits.pop(index-1)
+        print('Deleted succesfully')
+
+
+    def find_habit(self,find):
+
+        ##Checks if the title is found in any of the saved habit titles
+        for habits in self.habits:
+            if habits.title == find:
+                return habits
+         ##raises an error t=if the title you typed is not matching any of the titles   
+            raise ValueError(f'Sorry!! {find} does not exist')
+
+
+
         
     
         
