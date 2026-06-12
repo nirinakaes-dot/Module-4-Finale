@@ -13,7 +13,7 @@ def load_habits():
  try:
      with open(Habit_file, 'r') as file:
             data = json.load(file)
-            return [Habit.from_dict(h) for h in data]  # 
+            return [Habit.from_dict(h) for h in data]  
  except json.JSONDecodeError:
       return []
    

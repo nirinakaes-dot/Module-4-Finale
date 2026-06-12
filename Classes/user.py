@@ -8,8 +8,6 @@ class User:
         self.habits = []
 
     def validate_add_habit(self,title,description,due_date):
-
-
        
         ##Check if the variables exists
 

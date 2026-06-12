@@ -1,4 +1,5 @@
-from datetime import date
+from datetime import date, datetime
+from Classes.entry import Entry
 
 
 class Habit:
@@ -14,13 +15,16 @@ class Habit:
         "title": self.title,
         "description": self.description,
         "due_date": str(self.due_date),
-        "status": self.status
-    }
+        "status": self.status,
+        "entries": [{"date": str(e.date), "note": e.note} for e in self.entries]
+      }
+
     @classmethod
     def from_dict(cls, data):
      habit = cls(data['title'], data['description'], data['due_date'])
      habit.status = data.get('status', False)
-     habit.entries = data.get('entries', [])
+     entries_data = data.get('entries', [])
+     habit.entries = [Entry(datetime.strptime(e['date'], "%Y-%m-%d").date(), e.get('note', '')) for e in entries_data]  
      return habit
 
     def check_pending_habits(self):
@@ -40,4 +44,5 @@ class Habit:
           #changes the state 
         else:
             self.status = True 
+            self.entries.append(Entry(date.today()))
             print(f'{self.title} is being marked as complete')
