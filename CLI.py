@@ -18,10 +18,11 @@ def cli():
 @cli.command()
 @click.argument('title')
 def delete(title):
+    """Delete habit by index."""
     habits = load_habits()
     user = User("username")
     user.habits = habits
-    user.delete_habit(title)
+    user.delete_habit(int(title))
     save_habits(user.habits)
     console.print(f'[red]{title} deleted successfully![/red]')
 
@@ -31,6 +32,7 @@ def delete(title):
 @click.argument('description')
 @click.argument('due_date')
 def add(title, description, due_date):
+    """Add a new habit. DATE format: YYYY-MM-DD"""
     habits = load_habits()
     user = User("username")
     user.habits = habits
@@ -42,8 +44,10 @@ def add(title, description, due_date):
 
 ## Find Habit command
 @cli.command()
+
 @click.argument('title')
 def find(title):
+    """Find a habit using  title."""
     habits = load_habits()
     user = User("username")
     user.habits = habits
@@ -54,6 +58,7 @@ def find(title):
 @cli.command()
 @click.argument('title')
 def daystreak(title):
+    """Show the current day streak for a habit."""
     habits = load_habits()
     user = User("username")
     user.habits = habits
@@ -65,6 +70,7 @@ def daystreak(title):
 @cli.command()
 @click.argument('title')
 def weekstreak(title):
+    """Show the current week streak for a habit."""
     habits = load_habits()
     user = User("username")
     user.habits = habits
@@ -78,6 +84,18 @@ def weekstreak(title):
         status = "[green]✅ Done[/green]" if completed else "[red]❌ Missed[/red]"
         table.add_row(day, status)
     console.print(table)
+
+@cli.command()
+@click.argument('title')
+def complete(title):
+    """Mark a habit as complete for today."""
+    habits = load_habits()
+    user = User("username")
+    user.habits = habits
+    habit = user.find_habit(title)
+    habit.mark_complete()
+    save_habits(user.habits)
+    console.print(f'[green]{title} marked as complete! ✅[/green]')
 
 if __name__ == "__main__":
     cli()
