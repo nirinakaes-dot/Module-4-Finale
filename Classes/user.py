@@ -1,5 +1,5 @@
 from datetime import date
-from habit import Habit
+from Classes.habit import Habit
 
 class User:
 
@@ -67,7 +67,7 @@ class User:
             if habits.title == find:
                 return habits
          ##raises an error t=if the title you typed is not matching any of the titles   
-            raise ValueError(f'Sorry!! {find} does not exist')
+        raise ValueError(f'Sorry!! {find} does not exist')
 
 
 
