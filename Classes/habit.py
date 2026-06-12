@@ -7,6 +7,21 @@ class Habit:
         self.description = description
         self.due_date = due_date
         self.status = False
+        self.entries = []
+
+    def to_dict(self):
+      return {
+        "title": self.title,
+        "description": self.description,
+        "due_date": str(self.due_date),
+        "status": self.status
+    }
+    @classmethod
+    def from_dict(cls, data):
+     habit = cls(data['title'], data['description'], data['due_date'])
+     habit.status = data.get('status', False)
+     habit.entries = data.get('entries', [])
+     return habit
 
     def check_pending_habits(self):
         if self.status == False:
@@ -18,6 +33,7 @@ class Habit:
             return True
         return False
     
+    #Changes the status from False to True
     def mark_complete(self):
         if self.status == True:
           print(f'{self.title} was complete')   
